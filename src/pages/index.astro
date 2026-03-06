@@ -1,4 +1,5 @@
 ---
+import Terminal from "../components/Terminal.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -34,6 +35,7 @@ import Layout from "../layouts/Layout.astro";
         <a href="#hero"      class="hud-link" data-text="INICIO">INICIO</a>
         <a href="#projects"  class="hud-link" data-text="PROYECTOS">PROYECTOS</a>
         <a href="#skills"    class="hud-link" data-text="SKILLS">SKILLS</a>
+        <a href="cyberpunk2077"    class="hud-link" data-text="SKILLS">CYBERPUNK</a>
         <a href="#about"     class="hud-link" data-text="ABOUT">ABOUT</a>
         <a href="#contact"   class="hud-link" data-text="CONTACTO">CONTACTO</a>
         <button class="hud-terminal-btn" id="open-terminal">
@@ -53,6 +55,7 @@ import Layout from "../layouts/Layout.astro";
       <div class="hero-content">
         <div class="hero-tag">// IDENTIFICACIÓN DE OPERATIVO</div>
         <h1 class="hero-name glitch" data-text="HÉCTOR OVIEDO">HÉCTOR OVIEDO</h1>
+        <h2 class="hero-name glitch" data-text="NETWATCH">NETWATCH</h2>
         <div class="hero-roles">
           <span class="role-prefix">&gt; </span>
           <span id="hero-typing" class="hero-typing"></span>
@@ -177,6 +180,10 @@ import Layout from "../layouts/Layout.astro";
             <span class="tag">Docker</span><span class="tag">Grafana</span><span class="tag">Prometheus</span>
           </div>
           <a href="https://github.com/HEO-80/monitoring-stack" target="_blank" class="card-link">ACCEDER AL REPO →</a>
+        </div>
+
+        <div style= "align=center">
+          <img src="terminal-heo80 repeat.svg" alt="NETWATCH Terminal" width="720"/>
         </div>
 
       </div>
@@ -316,6 +323,12 @@ import Layout from "../layouts/Layout.astro";
         </a>
       </div>
     </section>
+
+    <Terminal
+        title="cyberpunk2077@sistema ~ bash"
+        initialText="Bienvenido a Cyberpunk 2077 · ACCESO CONCEDIDO"
+        height="500px"
+        />
 
     <!-- ═══ FOOTER ═══ -->
     <footer class="cyber-footer">

@@ -1,19 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Terminal from "../components/Terminal.astro";
 ---
 
 <Layout>
   <nav class="cyber-nav">
     <ul class="cyber-menu">
-      <li><a href="#" class="cyber-link" data-text="INICIO">INICIO</a></li>
+      <li><a href="/" class="cyber-link" data-text="INICIO">INICIO</a></li>
+      <li><a href="https://www.cyberpunk.net/us/es/" class="cyber-link" data-text="INICIO">GAME</a></li>
       <li>
-        <a href="#" class="cyber-link" data-text="PROYECTOS">PROYECTOS</a>
+        <a href="/#proyectos" class="cyber-link" data-text="PROYECTOS">PROYECTOS</a>
       </li>
       <li>
-        <a href="#" class="cyber-link" data-text="ANIMACIONES">ANIMACIONES</a>
+        <a href="/#animaciones" class="cyber-link" data-text="ANIMACIONES">ANIMACIONES</a>
       </li>
-      <li><a href="#" class="cyber-link" data-text="ABOUT">ABOUT</a></li>
+      <li><a href="/#about" class="cyber-link" data-text="ABOUT">ABOUT</a></li>
     </ul>
+   
   </nav>
 
   <h1>CyberPunk 2077</h1>
@@ -31,6 +34,11 @@ import Layout from "../layouts/Layout.astro";
       ></span>
     </h3>
 
+        <!-- Uso básico -->
+        <!-- <Terminal /> -->
+
+      
+
     <div id="status-indicator" class="status-indicator hidden">
       <div class="status-dot"></div>
       <span class="status-text">SISTEMA ONLINE</span>
@@ -40,6 +48,12 @@ import Layout from "../layouts/Layout.astro";
     <div class="box">Destroy!</div>
     <div class="box hover-box">Hover World me!</div>
   </div> -->
+    <!-- Con título y texto inicial personalizado -->
+        <Terminal
+        title="cyberpunk2077@sistema ~ bash"
+        initialText="Bienvenido a Cyberpunk 2077 · ACCESO CONCEDIDO"
+        height="500px"
+        />
 
   <footer class="cyber-footer">
     <div class="cyber-line"></div>

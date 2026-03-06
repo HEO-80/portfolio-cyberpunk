@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400">
+  <defs>
+    <style>
+      .mono { font-family: 'Share Tech Mono', 'Courier New', monospace; }
+      .t-base   { fill: #c8c8d0; font-size: 13px; }
+      .t-green  { fill: #00ff41; font-size: 13px; }
+      .t-yellow { fill: #ffcc00; font-size: 13px; }
+      .t-cyan   { fill: #00ffff; font-size: 13px; }
+      .t-magenta{ fill: #ff00ff; font-size: 13px; }
+      .t-red    { fill: #ff3030; font-size: 13px; }
+      .t-dim    { fill: #555566; font-size: 13px; }
+    </style>
+    <clipPath id="clip-top"><rect x="0" y="0" width="720" height="200"/></clipPath>
+    <pattern id="scanlines" x="0" y="0" width="720" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="720" height="2" fill="rgba(0,0,0,0.18)"/>
+    </pattern>
+  </defs>
+
+  <!-- Total cycle = 11s -->
+
+  <!-- ── BACKGROUND ── -->
+  <rect width="720" height="400" fill="#060608"/>
+  <rect width="720" height="400" fill="url(#scanlines)" opacity="0.6"/>
+
+  <!-- Grid -->
+  <g stroke="#0a1a0a" stroke-width="1" opacity="0.5">
+    <line x1="0" y1="50"  x2="720" y2="50"/>
+    <line x1="0" y1="100" x2="720" y2="100"/>
+    <line x1="0" y1="150" x2="720" y2="150"/>
+    <line x1="0" y1="200" x2="720" y2="200"/>
+    <line x1="0" y1="250" x2="720" y2="250"/>
+    <line x1="0" y1="300" x2="720" y2="300"/>
+    <line x1="0" y1="350" x2="720" y2="350"/>
+    <line x1="180" y1="0" x2="180" y2="400"/>
+    <line x1="360" y1="0" x2="360" y2="400"/>
+    <line x1="540" y1="0" x2="540" y2="400"/>
+  </g>
+
+  <!-- Border -->
+  <rect x="1" y="1" width="718" height="398" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.6"/>
+  <rect x="4" y="4" width="712" height="392" fill="none" stroke="#00ffff" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Title bar -->
+  <rect x="1" y="1" width="718" height="28" fill="rgba(0,255,255,0.07)"/>
+  <line x1="1" y1="29" x2="719" y2="29" stroke="#00ffff" stroke-width="0.8" opacity="0.4"/>
+  <circle cx="18" cy="15" r="5" fill="#ff5f57"/>
+  <circle cx="34" cy="15" r="5" fill="#febc2e"/>
+  <circle cx="50" cy="15" r="5" fill="#28c840"/>
+  <text x="360" y="19" text-anchor="middle" class="mono t-dim" font-size="11">netwatch@HEO-80 ~ powershell</text>
+  <text x="700" y="19" text-anchor="end" class="mono t-cyan" font-size="10" opacity="0.5">v2.077</text>
+
+  <!-- Corner deco -->
+  <polyline points="1,1 20,1 20,8" fill="none" stroke="#00ffff" stroke-width="1.5"/>
+  <polyline points="719,1 700,1 700,8" fill="none" stroke="#00ffff" stroke-width="1.5"/>
+  <polyline points="1,399 20,399 20,392" fill="none" stroke="#00ffff" stroke-width="1.5"/>
+  <polyline points="719,399 700,399 700,392" fill="none" stroke="#00ffff" stroke-width="1.5"/>
+
+  <!-- Bottom bar -->
+  <rect x="1" y="372" width="718" height="27" fill="rgba(0,255,255,0.04)"/>
+  <line x1="1" y1="372" x2="719" y2="372" stroke="#00ffff" stroke-width="0.8" opacity="0.3"/>
+  <text x="18" y="388" class="mono t-cyan" font-size="11">SYSTEM STATUS:</text>
+  <text x="148" y="388" class="mono t-green" font-size="11">ONLINE</text>
+  <circle cx="200" cy="384" r="4" fill="#00ff41">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="690" y="388" text-anchor="end" class="mono t-magenta" font-size="11">2077</text>
+
+  <!-- ══════════════════════════════════════════
+       CONTENT — cycle 11s, loops infinitely
+       Lines appear 0-6s, glitch 6.5s, reboot 7-9s, blank 9-11s then restart
+  ═══════════════════════════════════════════ -->
+
+  <!-- LINE 1: prompt whoami — appears at 0.4s each cycle -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.036;0.04;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="58" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="58" class="mono t-base">:</text>
+    <text x="161" y="58" class="mono t-yellow">~</text>
+    <text x="175" y="58" class="mono t-base">$ whoami</text>
+  </g>
+
+  <!-- LINE 2: result -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.08;0.085;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="76" class="mono t-base">HEO-80 · Full Stack &amp; DeFi Dev · Zaragoza, ES</text>
+  </g>
+
+  <!-- LINE 3: ls repos/ -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.127;0.132;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="100" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="100" class="mono t-base">:</text>
+    <text x="161" y="100" class="mono t-yellow">~</text>
+    <text x="175" y="100" class="mono t-base">$ ls repos/</text>
+  </g>
+
+  <!-- LINE 4: repos row 1 -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.172;0.177;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="118" class="mono t-cyan">DeFi-MEV-Ecosystem/</text>
+    <text x="230" y="118" class="mono t-cyan">Flash_Loans/</text>
+    <text x="370" y="118" class="mono t-cyan">Eighterium-Protocol/</text>
+  </g>
+
+  <!-- LINE 5: repos row 2 -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.19;0.195;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="136" class="mono t-cyan">monitoring-stack/</text>
+    <text x="210" y="136" class="mono t-cyan">CodeTyper/</text>
+    <text x="340" y="136" class="mono t-cyan">apiCamunda/</text>
+  </g>
+
+  <!-- LINE 6: forge test -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.245;0.25;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="160" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="160" class="mono t-base">:</text>
+    <text x="161" y="160" class="mono t-yellow">~</text>
+    <text x="175" y="160" class="mono t-base">$ forge test --match Flash -vv</text>
+  </g>
+
+  <!-- LINE 7: PASS -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.309;0.314;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="178" class="mono t-green">[PASS] testFlashLoan() · gas: 329850</text>
+  </g>
+
+  <!-- LINE 8: EXITO -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.336;0.341;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="196" class="mono t-green">EXITO: Prestamo de 1M WETH pedido y devuelto ⚡</text>
+  </g>
+
+  <!-- LINE 9: git push -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.390;0.395;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="220" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="220" class="mono t-base">:</text>
+    <text x="161" y="220" class="mono t-yellow">~</text>
+    <text x="175" y="220" class="mono t-base">$ git push origin main</text>
+  </g>
+
+  <!-- LINE 10: branch -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.436;0.441;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="238" class="mono t-base">Branch main → github.com/HEO-80</text>
+  </g>
+
+  <!-- LINE 11: SYSTEM STATUS -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.481;0.486;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="262" class="mono t-green">SYSTEM STATUS: ONLINE ●</text>
+  </g>
+
+  <!-- LINE 12: idle prompt + cursor -->
+  <g>
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.527;0.532;0.59;0.63;0.68;0.72;0.73;0.82;0.9;0.99;1"/>
+    <text x="18" y="286" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="286" class="mono t-base">:</text>
+    <text x="161" y="286" class="mono t-yellow">~</text>
+    <text x="175" y="286" class="mono t-base">$ </text>
+    <rect x="193" y="273" width="9" height="14" fill="#ffcc00">
+      <animate attributeName="opacity" values="1;0;1;0;1;0;0" dur="11s" repeatCount="indefinite"
+        keyTimes="0;0.54;0.55;0.56;0.57;0.59;1"/>
+    </rect>
+  </g>
+
+  <!-- ══════════ GLITCH at 6.5s (keyTime 0.591) ══════════ -->
+
+  <!-- Magenta flash -->
+  <rect x="0" y="0" width="720" height="400" fill="#ff00ff">
+    <animate attributeName="opacity"
+      values="0;0;0.15;0;0.08;0;0.12;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.590;0.593;0.596;0.600;0.603;0.607;0.612;0.65;0.82;0.99;1"/>
+  </rect>
+
+  <!-- Cyan offset glitch lines -->
+  <g clip-path="url(#clip-top)">
+    <rect x="0" y="0" width="720" height="200" fill="#00ffff">
+      <animate attributeName="opacity"
+        values="0;0;0.04;0;0;0;0;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+        keyTimes="0;0.590;0.597;0.612;0.65;0.7;0.82;0.85;0.9;0.95;0.99;1"/>
+    </rect>
+    <text x="22" y="76" class="mono t-cyan" font-size="13">
+      HEO-80 · Full Stack &amp; DeFi Dev · Zaragoza, ES
+      <animate attributeName="opacity"
+        values="0;0;0.6;0;0;0;0;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+        keyTimes="0;0.590;0.595;0.610;0.65;0.7;0.82;0.85;0.9;0.95;0.99;1"/>
+    </text>
+  </g>
+
+  <!-- Glitch bars -->
+  <rect x="0" y="85" width="720" height="3" fill="#00ffff">
+    <animate attributeName="opacity"
+      values="0;0;0.6;0;0.3;0;0;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.591;0.595;0.600;0.604;0.610;0.65;0.7;0.82;0.9;0.99;1"/>
+  </rect>
+  <rect x="0" y="160" width="720" height="2" fill="#ff00ff">
+    <animate attributeName="opacity"
+      values="0;0;0.5;0;0.4;0;0;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.595;0.598;0.602;0.606;0.612;0.65;0.7;0.82;0.9;0.99;1"/>
+  </rect>
+  <rect x="0" y="220" width="500" height="2" fill="#ffcc00">
+    <animate attributeName="opacity"
+      values="0;0;0.4;0;0.3;0;0;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.593;0.597;0.601;0.605;0.611;0.65;0.7;0.82;0.9;0.99;1"/>
+  </rect>
+
+  <!-- ══════════ BLACK WIPE + REBOOT at 7.2s (0.654) ══════════ -->
+
+  <rect x="0" y="30" width="720" height="342" fill="#060608">
+    <animate attributeName="opacity"
+      values="0;0;0;1;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.59;0.64;0.655;0.72;0.78;0.85;0.86;0.9;0.95;0.99;1"/>
+  </rect>
+
+  <!-- SIGNAL LOST text -->
+  <text x="360" y="175" text-anchor="middle" class="mono t-red" font-size="18" font-weight="bold">
+    !! SIGNAL LOST — REBOOTING !!
+    <animate attributeName="opacity"
+      values="0;0;0;0;1;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.59;0.64;0.655;0.672;0.75;0.81;0.82;0.9;0.95;0.99;1"/>
+  </text>
+  <text x="360" y="205" text-anchor="middle" class="mono t-dim" font-size="12">
+    reiniciando NETWATCH OS v2.077...
+    <animate attributeName="opacity"
+      values="0;0;0;0;0;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.59;0.64;0.655;0.672;0.682;0.81;0.82;0.9;0.95;0.99;1"/>
+  </text>
+
+  <!-- Progress bar outline -->
+  <rect x="160" y="230" width="400" height="6" fill="none" stroke="#333" stroke-width="1">
+    <animate attributeName="opacity"
+      values="0;0;0;0;0;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.59;0.64;0.655;0.672;0.682;0.81;0.82;0.9;0.95;0.99;1"/>
+  </rect>
+
+  <!-- Progress bar fill -->
+  <rect x="160" y="230" width="400" height="6" fill="#ff3030">
+    <animate attributeName="opacity"
+      values="0;0;0;0;0;1;1;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.59;0.64;0.655;0.672;0.682;0.81;0.82;0.9;0.95;0.99;1"/>
+    <animate attributeName="width"
+      values="0;0;0;0;0;0;400;0;0;0;0;0" dur="11s" repeatCount="indefinite"
+      keyTimes="0;0.59;0.64;0.655;0.672;0.682;0.81;0.82;0.9;0.95;0.99;1"/>
+  </rect>
+
+</svg>

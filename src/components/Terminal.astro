@@ -1,0 +1,288 @@
+---
+interface Props {
+  title?: string;
+  initialText?: string;
+  height?: string;
+}
+const {
+  title = "netwatch@HEO-80 ~ powershell",
+  initialText = "",
+  height = "400px"
+} = Astro.props;
+
+const id = `terminal-${Math.random().toString(36).slice(2,7)}`;
+---
+
+<!-- Botón para abrir -->
+<button class="open-terminal-btn" data-terminal-id={id}>
+  <span class="btn-icon">⌨</span>
+  <span>TERMINAL</span>
+  <span class="btn-corner"></span>
+</button>
+
+<!-- Overlay -->
+<div class="terminal-overlay" id={`overlay-${id}`}>
+  <div class="terminal-window" style={`height:${height}`}>
+
+    <!-- Title bar -->
+    <div class="term-bar">
+      <div class="term-dots">
+        <span class="dot dot-r" data-close-id={id}></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+      </div>
+      <span class="term-title">{title}</span>
+      <span class="term-esc">ESC para cerrar</span>
+    </div>
+
+    <!-- xterm container -->
+    <div class="xterm-wrap" id={id}></div>
+
+  </div>
+</div>
+
+<style>
+  /* ── OPEN BUTTON ───────────────────────────── */
+  .open-terminal-btn {
+    position: relative;
+    font-family: 'Orbitron', monospace;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: transparent;
+    border: 1px solid #00ffff;
+    color: #00ffff;
+    padding: .5rem 1.2rem;
+    cursor: pointer;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+    transition: all .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    overflow: hidden;
+  }
+  .open-terminal-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #00ffff;
+    transform: translateX(-100%);
+    transition: transform .2s;
+    z-index: 0;
+  }
+  .open-terminal-btn:hover::before { transform: translateX(0); }
+  .open-terminal-btn:hover { color: #060608; box-shadow: 0 0 20px rgba(0,255,255,.4); }
+  .open-terminal-btn span { position: relative; z-index: 1; }
+  .btn-icon { font-size: .9rem; }
+
+  /* ── OVERLAY ───────────────────────────────── */
+  .terminal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    animation: overlay-in .2s ease;
+  }
+  .terminal-overlay.active { display: flex; }
+
+  @keyframes overlay-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── TERMINAL WINDOW ───────────────────────── */
+  .terminal-window {
+    width: min(900px, 90vw);
+    background: #060608;
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 60px rgba(0,255,255,.15), inset 0 0 40px rgba(0,0,0,.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: window-in .25s cubic-bezier(.16,1,.3,1);
+  }
+
+  @keyframes window-in {
+    from { transform: scale(.94) translateY(12px); opacity: 0; }
+    to   { transform: scale(1)   translateY(0);    opacity: 1; }
+  }
+
+  /* ── TITLE BAR ─────────────────────────────── */
+  .term-bar {
+    background: rgba(0,255,255,.05);
+    border-bottom: 1px solid rgba(0,255,255,.2);
+    padding: .5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-shrink: 0;
+  }
+  .term-dots { display: flex; gap: .4rem; }
+  .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity .15s;
+  }
+  .dot:hover { opacity: .7; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .term-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: .7rem;
+    color: rgba(255,255,255,.4);
+    flex: 1;
+    text-align: center;
+  }
+  .term-esc {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: .65rem;
+    color: rgba(255,255,255,.25);
+  }
+
+  /* ── XTERM CONTAINER ───────────────────────── */
+  .xterm-wrap {
+    flex: 1;
+    padding: .5rem;
+    overflow: hidden;
+    min-height: 0;
+  }
+</style>
+
+<script define:vars={{ id, initialText }}>
+  const openBtn   = document.querySelector(`[data-terminal-id="${id}"]`);
+  const overlay   = document.getElementById(`overlay-${id}`);
+  const closeBtn  = document.querySelector(`[data-close-id="${id}"]`);
+  const container = document.getElementById(id);
+
+  let term = null;
+
+  function openTerminal() {
+    overlay.classList.add('active');
+    if (term) return;
+
+    // Wait for xterm to be available
+    const tryInit = setInterval(() => {
+      if (window.Terminal && window.FitAddon) {
+        clearInterval(tryInit);
+        initTerm();
+      }
+    }, 100);
+  }
+
+  function initTerm() {
+    term = new window.Terminal({
+      cursorBlink: true,
+      theme: {
+        background:  '#060608',
+        foreground:  '#c8c8d0',
+        cursor:      '#ffcc00',
+        green:       '#00ff41',
+        yellow:      '#ffcc00',
+        cyan:        '#00ffff',
+        magenta:     '#ff00ff',
+        red:         '#ff3030',
+      },
+      fontFamily: "'Share Tech Mono', 'Courier New', monospace",
+      fontSize: 14,
+      lineHeight: 1.5,
+    });
+
+    const fitAddon = new window.FitAddon.FitAddon();
+    term.loadAddon(fitAddon);
+    term.open(container);
+    fitAddon.fit();
+
+    // Welcome
+    term.writeln('\x1b[1;33m╔══════════════════════════════════════════╗\x1b[0m');
+    term.writeln('\x1b[1;33m║     NETWATCH OS v2.077  ·  HEO-80        ║\x1b[0m');
+    term.writeln('\x1b[1;33m╚══════════════════════════════════════════╝\x1b[0m');
+    term.writeln('');
+    if (initialText) {
+      term.writeln(`\x1b[36m${initialText}\x1b[0m`);
+      term.writeln('');
+    }
+    term.writeln('\x1b[36mComandos:\x1b[0m help · whoami · projects · skills · contact · status · clear');
+    term.writeln('');
+
+    let input = '';
+    prompt();
+
+    term.onKey(({ key, domEvent }) => {
+      const code = domEvent.keyCode;
+      if (code === 13) {
+        term.writeln('');
+        handleCmd(input.trim());
+        input = '';
+        prompt();
+      } else if (code === 8) {
+        if (input.length > 0) { input = input.slice(0,-1); term.write('\b \b'); }
+      } else {
+        input += key;
+        term.write(key);
+      }
+    });
+  }
+
+  function prompt() {
+    term.write('\x1b[32mnetwatch@HEO-80\x1b[0m:\x1b[33m~\x1b[0m$ ');
+  }
+
+  function handleCmd(cmd) {
+    switch(cmd.toLowerCase()) {
+      case 'help':
+        term.writeln('\x1b[36mComandos:\x1b[0m help · whoami · projects · skills · contact · status · clear');
+        break;
+      case 'whoami':
+        term.writeln('\x1b[33mHéctor Oviedo\x1b[0m — Full Stack Dev & DeFi Researcher');
+        term.writeln('📍 Zaragoza, España · \x1b[36mgithub.com/HEO-80\x1b[0m');
+        break;
+      case 'projects':
+        term.writeln('\x1b[36mRepositorios activos:\x1b[0m');
+        term.writeln('  ⚡ DeFi-MEV-Ecosystem   → MEV · Flash Loans · Arbitrage');
+        term.writeln('  ⚡ Flash_Loans          → Aave V3 · Ethereum Mainnet');
+        term.writeln('  ∞  Eighterium-Protocol  → Pagos programables · DAO');
+        term.writeln('  🖥 CodeTyper            → Mecanografía para código');
+        break;
+      case 'skills':
+        term.writeln('\x1b[36mMódulos instalados:\x1b[0m');
+        term.writeln('  Solidity · Foundry · Aave · Uniswap · MEV');
+        term.writeln('  C# · .NET · Azure · Docker · Node.js');
+        term.writeln('  React · Next.js · Astro · GSAP · TypeScript');
+        break;
+      case 'contact':
+        term.writeln('\x1b[36mCanales:\x1b[0m');
+        term.writeln('  LinkedIn → linkedin.com/in/hectorob');
+        term.writeln('  GitHub   → github.com/HEO-80');
+        term.writeln('  Email    → eovertigo@gmail.com');
+        break;
+      case 'status':
+        term.writeln('\x1b[32m[OK]\x1b[0m NETWATCH OS v2.077 · ONLINE');
+        term.writeln('\x1b[32m[OK]\x1b[0m DeFi protocols connected');
+        term.writeln('\x1b[32m[OK]\x1b[0m Smart contract engine ready');
+        break;
+      case 'clear':
+        term.clear();
+        break;
+      case '':
+        break;
+      default:
+        term.writeln(`\x1b[31mcomando no encontrado:\x1b[0m ${cmd} · escribe \x1b[33mhelp\x1b[0m`);
+    }
+  }
+
+  function closeTerminal() {
+    overlay.classList.remove('active');
+  }
+
+  openBtn.addEventListener('click', openTerminal);
+  closeBtn.addEventListener('click', closeTerminal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeTerminal();
+  });
+</script>

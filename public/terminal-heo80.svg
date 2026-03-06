@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap');
+
+      .mono { font-family: 'Share Tech Mono', 'Courier New', monospace; }
+      .t-base  { fill: #c8c8d0; font-size: 13px; }
+      .t-green { fill: #00ff41; font-size: 13px; }
+      .t-yellow{ fill: #ffcc00; font-size: 13px; }
+      .t-cyan  { fill: #00ffff; font-size: 13px; }
+      .t-magenta{fill: #ff00ff; font-size: 13px; }
+      .t-red   { fill: #ff3030; font-size: 13px; }
+      .t-dim   { fill: #555566; font-size: 13px; }
+    </style>
+
+    <!-- Glitch clip regions -->
+    <clipPath id="clip-top">
+      <rect x="0" y="0" width="720" height="200"/>
+    </clipPath>
+    <clipPath id="clip-bot">
+      <rect x="0" y="200" width="720" height="200"/>
+    </clipPath>
+
+    <!-- Scanline pattern -->
+    <pattern id="scanlines" x="0" y="0" width="720" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="720" height="2" fill="rgba(0,0,0,0.18)"/>
+    </pattern>
+  </defs>
+
+  <!-- ── BACKGROUND ── -->
+  <rect width="720" height="400" fill="#060608"/>
+  <rect width="720" height="400" fill="url(#scanlines)" opacity="0.6"/>
+
+  <!-- Grid lines subtle -->
+  <g stroke="#0a1a0a" stroke-width="1" opacity="0.5">
+    <line x1="0" y1="50"  x2="720" y2="50"/>
+    <line x1="0" y1="100" x2="720" y2="100"/>
+    <line x1="0" y1="150" x2="720" y2="150"/>
+    <line x1="0" y1="200" x2="720" y2="200"/>
+    <line x1="0" y1="250" x2="720" y2="250"/>
+    <line x1="0" y1="300" x2="720" y2="300"/>
+    <line x1="0" y1="350" x2="720" y2="350"/>
+    <line x1="180" y1="0" x2="180" y2="400"/>
+    <line x1="360" y1="0" x2="360" y2="400"/>
+    <line x1="540" y1="0" x2="540" y2="400"/>
+  </g>
+
+  <!-- ── BORDER ── -->
+  <rect x="1" y="1" width="718" height="398" fill="none" stroke="#00ffff" stroke-width="1.5" opacity="0.6"/>
+  <rect x="4" y="4" width="712" height="392" fill="none" stroke="#00ffff" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- ── TITLE BAR ── -->
+  <rect x="1" y="1" width="718" height="28" fill="rgba(0,255,255,0.07)"/>
+  <line x1="1" y1="29" x2="719" y2="29" stroke="#00ffff" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- dots -->
+  <circle cx="18" cy="15" r="5" fill="#ff5f57"/>
+  <circle cx="34" cy="15" r="5" fill="#febc2e"/>
+  <circle cx="50" cy="15" r="5" fill="#28c840"/>
+
+  <!-- title -->
+  <text x="360" y="19" text-anchor="middle" class="mono t-dim" font-size="11">netwatch@HEO-80 ~ powershell</text>
+  <!-- corner tag -->
+  <text x="700" y="19" text-anchor="end" class="mono t-cyan" font-size="10" opacity="0.5">v2.077</text>
+
+  <!-- ══════════════════════════════════════════
+       TERMINAL CONTENT — all lines hidden then revealed
+       via animateTransform + opacity animations
+  ═══════════════════════════════════════════ -->
+
+  <!-- Each line fades in sequentially -->
+  <!-- Line 1: prompt + whoami  t=0.4s -->
+  <g opacity="0">
+    <animateTransform attributeName="transform" type="translate" values="0,0" dur="0.01s" begin="0.4s" fill="freeze"/>
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="0.4s" fill="freeze"/>
+    <text x="18" y="58" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="58" class="mono t-base">:</text>
+    <text x="161" y="58" class="mono t-yellow">~</text>
+    <text x="175" y="58" class="mono t-base">$ whoami</text>
+  </g>
+
+  <!-- Line 2: result  t=0.9s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="0.9s" fill="freeze"/>
+    <text x="18" y="76" class="mono t-base">HEO-80 · Full Stack &amp; DeFi Dev · Zaragoza, ES</text>
+  </g>
+
+  <!-- Line 3: prompt + ls  t=1.4s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="1.4s" fill="freeze"/>
+    <text x="18" y="100" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="100" class="mono t-base">:</text>
+    <text x="161" y="100" class="mono t-yellow">~</text>
+    <text x="175" y="100" class="mono t-base">$ ls repos/</text>
+  </g>
+
+  <!-- Line 4: repos  t=1.9s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="1.9s" fill="freeze"/>
+    <text x="18" y="118" class="mono t-cyan">DeFi-MEV-Ecosystem/</text>
+    <text x="230" y="118" class="mono t-cyan">Flash_Loans/</text>
+    <text x="370" y="118" class="mono t-cyan">Eighterium-Protocol/</text>
+  </g>
+
+  <!-- Line 5: more repos  t=2.1s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="2.1s" fill="freeze"/>
+    <text x="18" y="136" class="mono t-cyan">monitoring-stack/</text>
+    <text x="210" y="136" class="mono t-cyan">CodeTyper/</text>
+    <text x="340" y="136" class="mono t-cyan">apiCamunda/</text>
+  </g>
+
+  <!-- Line 6: forge test prompt  t=2.7s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="2.7s" fill="freeze"/>
+    <text x="18" y="160" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="160" class="mono t-base">:</text>
+    <text x="161" y="160" class="mono t-yellow">~</text>
+    <text x="175" y="160" class="mono t-base">$ forge test --match Flash -vv</text>
+  </g>
+
+  <!-- Line 7: PASS  t=3.4s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="3.4s" fill="freeze"/>
+    <text x="18" y="178" class="mono t-green">[PASS] testFlashLoan() · gas: 329850</text>
+  </g>
+
+  <!-- Line 8: EXITO  t=3.7s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="3.7s" fill="freeze"/>
+    <text x="18" y="196" class="mono t-green">EXITO: Prestamo de 1M WETH pedido y devuelto ⚡</text>
+  </g>
+
+  <!-- Line 9: git push prompt  t=4.3s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="4.3s" fill="freeze"/>
+    <text x="18" y="220" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="220" class="mono t-base">:</text>
+    <text x="161" y="220" class="mono t-yellow">~</text>
+    <text x="175" y="220" class="mono t-base">$ git push origin main</text>
+  </g>
+
+  <!-- Line 10: branch  t=4.8s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="4.8s" fill="freeze"/>
+    <text x="18" y="238" class="mono t-base">Branch main → github.com/HEO-80</text>
+  </g>
+
+  <!-- Line 11: SYSTEM STATUS  t=5.3s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="5.3s" fill="freeze"/>
+    <text x="18" y="262" class="mono t-green">SYSTEM STATUS: ONLINE ●</text>
+  </g>
+
+  <!-- Line 12: idle prompt  t=5.8s -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.05s" begin="5.8s" fill="freeze"/>
+    <text x="18" y="286" class="mono t-green">netwatch@HEO-80</text>
+    <text x="154" y="286" class="mono t-base">:</text>
+    <text x="161" y="286" class="mono t-yellow">~</text>
+    <text x="175" y="286" class="mono t-base">$ </text>
+    <!-- blinking cursor -->
+    <rect x="193" y="273" width="9" height="14" fill="#ffcc00">
+      <animate attributeName="opacity" values="1;0;1" dur="1s" begin="5.8s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- ══════════════════════════════════════════
+       GLITCH EFFECT — fires at t=6.5s
+  ═══════════════════════════════════════════ -->
+
+  <!-- Glitch flash overlay -->
+  <rect x="0" y="0" width="720" height="400" fill="#ff00ff" opacity="0">
+    <animate attributeName="opacity"
+      values="0;0;0;0.15;0;0.08;0;0.12;0;0"
+      dur="0.5s" begin="6.5s" fill="freeze"/>
+  </rect>
+
+  <!-- Cyan offset layer (top half) -->
+  <g clip-path="url(#clip-top)" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.7;0;0.5;0" dur="0.4s" begin="6.5s" fill="freeze"/>
+    <rect x="0" y="0" width="720" height="200" fill="#00ffff" opacity="0.04"/>
+    <!-- shifted duplicate of some lines -->
+    <text x="22" y="76" class="mono t-cyan" font-size="13" opacity="0.6">HEO-80 · Full Stack &amp; DeFi Dev · Zaragoza, ES</text>
+    <text x="14" y="118" class="mono t-magenta" font-size="13" opacity="0.5">DeFi-MEV-Ecosystem/  Flash_Loans/</text>
+  </g>
+
+  <!-- Horizontal glitch bars -->
+  <rect x="0" y="85" width="720" height="3" fill="#00ffff" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.6;0;0.3;0" dur="0.35s" begin="6.55s" fill="freeze"/>
+    <animate attributeName="y" values="85;92;85;78;85" dur="0.35s" begin="6.55s" fill="freeze"/>
+  </rect>
+  <rect x="0" y="160" width="720" height="2" fill="#ff00ff" opacity="0">
+    <animate attributeName="opacity" values="0;0.5;0;0.4;0" dur="0.3s" begin="6.6s" fill="freeze"/>
+  </rect>
+  <rect x="0" y="220" width="500" height="2" fill="#ffcc00" opacity="0">
+    <animate attributeName="opacity" values="0;0.4;0;0.3;0" dur="0.25s" begin="6.58s" fill="freeze"/>
+  </rect>
+
+  <!-- ══════════════════════════════════════════
+       REBOOT SEQUENCE — t=7.2s
+  ═══════════════════════════════════════════ -->
+
+  <!-- Black wipe over everything -->
+  <rect x="0" y="0" width="720" height="400" fill="#060608" opacity="0">
+    <animate attributeName="opacity" values="0;0;1" dur="0.3s" begin="7.0s" fill="freeze"/>
+  </rect>
+
+  <!-- REBOOT text -->
+  <text x="360" y="180" text-anchor="middle" class="mono t-red" font-size="18" font-weight="bold" opacity="0">
+    !! SIGNAL LOST — REBOOTING !!
+    <animate attributeName="opacity" values="0;1;1;0" dur="1.0s" begin="7.3s" fill="freeze"/>
+  </text>
+  <text x="360" y="210" text-anchor="middle" class="mono t-dim" font-size="12" opacity="0">
+    reiniciando NETWATCH OS v2.077...
+    <animate attributeName="opacity" values="0;1;1;0" dur="1.0s" begin="7.5s" fill="freeze"/>
+  </text>
+
+  <!-- Progress bar reboot -->
+  <rect x="160" y="230" width="400" height="6" fill="none" stroke="#333" stroke-width="1" opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" dur="1.2s" begin="7.6s" fill="freeze"/>
+  </rect>
+  <rect x="160" y="230" width="0" height="6" fill="#ff3030" opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" dur="1.2s" begin="7.6s" fill="freeze"/>
+    <animate attributeName="width" values="0;400" dur="1.0s" begin="7.6s" fill="freeze"/>
+  </rect>
+
+  <!-- ══════════════════════════════════════════
+       RESTART — whole thing loops via restart
+       The entire animation restarts at t=9s
+       We fade back in and replay
+  ═══════════════════════════════════════════ -->
+
+  <!-- All content group — fades back in after reboot, then loops -->
+  <!-- SVG animations loop via the individual animates having
+       repeatCount on the outer wrapper -->
+
+  <!-- Bottom bar -->
+  <rect x="1" y="372" width="718" height="27" fill="rgba(0,255,255,0.04)"/>
+  <line x1="1" y1="372" x2="719" y2="372" stroke="#00ffff" stroke-width="0.8" opacity="0.3"/>
+  <text x="18"  y="388" class="mono t-cyan"  font-size="11">SYSTEM STATUS: ONLINE</text>
+  <circle cx="178" cy="384" r="4" fill="#00ff41">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="690" y="388" text-anchor="end" class="mono t-magenta" font-size="11">2077</text>
+
+  <!-- Corner decorations -->
+  <polyline points="1,1 20,1 20,8" fill="none" stroke="#00ffff" stroke-width="1.5"/>
+  <polyline points="719,1 700,1 700,8" fill="none" stroke="#00ffff" stroke-width="1.5"/>
+  <polyline points="1,399 20,399 20,392" fill="none" stroke="#00ffff" stroke-width="1.5"/>
+  <polyline points="719,399 700,399 700,392" fill="none" stroke="#00ffff" stroke-width="1.5"/>
+</svg>
