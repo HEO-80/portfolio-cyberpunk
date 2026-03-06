@@ -1,13 +1,127 @@
 ---
+interface Props {
+  title?: string;
+}
+const { title = "HEO-80 | NETWATCH OS v2.077" } = Astro.props;
 ---
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>HEO-80 | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <!-- xterm.js para terminal real -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
   </head>
   <body>
     <slot />
   </body>
 </html>
+
+<style is:global>
+  :root {
+    --yellow:    #ffcc00;
+    --cyan:      #00ffff;
+    --magenta:   #ff00ff;
+    --red:       #ff3030;
+    --green:     #00ff41;
+    --bg:        #060608;
+    --bg2:       #0d0d14;
+    --bg3:       #12121c;
+    --border:    rgba(255,204,0,0.25);
+    --text:      #c8c8d0;
+    --font-hud:  'Orbitron', monospace;
+    --font-body: 'Rajdhani', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--yellow); }
+
+  /* Global grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,204,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,204,0,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+    animation: grid-drift 20s linear infinite;
+  }
+
+  @keyframes grid-drift {
+    from { transform: translate(0,0); }
+    to   { transform: translate(48px, 48px); }
+  }
+
+  /* Scanlines overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Utility glitch text */
+  .glitch {
+    position: relative;
+    color: var(--yellow);
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+  .glitch::before {
+    color: var(--cyan);
+    animation: glitch-before 4s infinite;
+  }
+  .glitch::after {
+    color: var(--magenta);
+    animation: glitch-after 4s infinite;
+  }
+  @keyframes glitch-before {
+    0%,89%,100% { opacity:0; transform:translate(0); }
+    90% { opacity:.7; transform:translate(-3px, 1px); clip-path: polygon(0 20%,100% 20%,100% 40%,0 40%); }
+    95% { opacity:.7; transform:translate(2px,-1px); clip-path: polygon(0 60%,100% 60%,100% 80%,0 80%); }
+  }
+  @keyframes glitch-after {
+    0%,91%,100% { opacity:0; transform:translate(0); }
+    92% { opacity:.6; transform:translate(3px,-2px); clip-path: polygon(0 50%,100% 50%,100% 70%,0 70%); }
+    97% { opacity:.6; transform:translate(-2px,1px); clip-path: polygon(0 10%,100% 10%,100% 30%,0 30%); }
+  }
+</style>
